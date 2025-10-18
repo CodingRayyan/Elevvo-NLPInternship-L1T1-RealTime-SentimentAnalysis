@@ -136,11 +136,13 @@ div.stButton > button[kind]:hover {
 """, unsafe_allow_html=True)
 
 # ---- Example Buttons ----
+def set_example(text):
+    st.session_state.user_input = text
+
 cols = st.columns(len(examples))
 for i, ex in enumerate(examples):
-    if cols[i].button(f"Example {i+1}", key=f"example_{i}"):
-        st.session_state.user_input = ex
-        st.experimental_rerun()  # <- force rerun to update text area
+    cols[i].button(f"Example {i+1}", key=f"example_{i}", on_click=set_example, args=(ex,))
+
 
 # ---- Text Area Styling ----
 st.markdown("""
@@ -276,3 +278,4 @@ if st.button("🚀 Analyze Sentiment"):
 
     else:
         st.warning("⚠️ Please enter a manual review or a YouTube URL first.")
+
