@@ -1,0 +1,10 @@
+streamlit
+nltk
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+requests
+streamlit-lottie
+streamlit-extras
