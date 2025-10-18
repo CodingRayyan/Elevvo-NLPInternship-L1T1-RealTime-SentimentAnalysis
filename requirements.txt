@@ -1,10 +1,10 @@
 streamlit
-nltk
 pandas
 numpy
-matplotlib
-seaborn
-scikit-learn
 requests
+scikit-learn
+nltk
+matplotlib
+google-api-python-client
 streamlit-lottie
 streamlit-extras
