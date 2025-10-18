@@ -50,6 +50,7 @@ def preprocess_text(text):
     words = [lemmatizer.lemmatize(word) for word in words if word not in stop_words]
     return ' '.join(words)
 
+# ---- Sidebar Styling ----
 st.markdown("""
 <style>
 [data-testid="stSidebar"] {
@@ -104,11 +105,9 @@ theme = st.radio("🎨 Choose Theme:", ["Dark Mode","Light Mode"], horizontal=Tr
 if theme=="Light Mode":
     st.markdown("<style>.stApp {background: #f0f0f0; color: black;}</style>", unsafe_allow_html=True)
 
-# ---- Input Sections ----
-st.markdown("💡 **Manual Review Input:**")
-
-# ---- Example Reviews ----
-# ---- Example Reviews ----
+# ---- Ensure session_state ----
+if "user_input" not in st.session_state:
+    st.session_state.user_input = ""
 
 # ---- Example Reviews ----
 examples = [
@@ -119,6 +118,7 @@ examples = [
 
 st.markdown("💡 **Try an Example Review:**")
 
+# ---- Example Buttons Styling ----
 st.markdown("""
 <style>
 div.stButton > button[kind] {
@@ -135,33 +135,30 @@ div.stButton > button[kind]:hover {
 </style>
 """, unsafe_allow_html=True)
 
-# Create columns for example buttons
+# ---- Example Buttons ----
 cols = st.columns(len(examples))
 for i, ex in enumerate(examples):
     if cols[i].button(f"Example {i+1}", key=f"example_{i}"):
-        st.session_state.user_input = ex  # Update session_state when button clicked
+        st.session_state.user_input = ex
+        st.experimental_rerun()  # <- force rerun to update text area
 
-# Ensure session_state exists
-if "user_input" not in st.session_state:
-    st.session_state.user_input = ""
-
+# ---- Text Area Styling ----
 st.markdown("""
 <style>
-/* Target the text area using data-testid */
 div[data-testid="stTextArea"] textarea {
-    border: 2px solid #FFD700 !important;  /* Yellow border */
-    border-radius: 10px !important;       /* Rounded corners */
+    border: 2px solid #FFD700 !important;
+    border-radius: 10px !important;
     padding: 10px !important;
 }
-
 div[data-testid="stTextArea"] textarea:focus {
     outline: none !important;
-    border: 2px solid #FFA500 !important; /* Darker yellow on focus */
+    border: 2px solid #FFA500 !important;
     box-shadow: 0 0 5px #FFD700;
 }
 </style>
 """, unsafe_allow_html=True)
 
+# ---- Text Area ----
 user_input = st.text_area(
     "✍️ Type your review here:",
     value=st.session_state.user_input,
@@ -170,37 +167,17 @@ user_input = st.text_area(
     key="user_input_box"
 )
 
-# ---- CSS to make example buttons yellow ----
+# ---- YouTube URL Input Styling ----
 st.markdown("""
 <style>
-button[kind="primary"] {
-    background-color: #FFD700 !important;
-    color: black !important;
-    font-weight: bold !important;
-}
-button[kind="primary"]:hover {
-    background-color: #ffea00 !important;
-    color: black !important;
-    transform: scale(1.05);
-}
-</style>
-""", unsafe_allow_html=True)
-
-
-st.markdown("💡 **YouTube Comment Analysis:**")
-
-st.markdown("""
-<style>
-/* Target the text input using data-testid */
 div[data-testid="stTextInput"] input {
-    border: 2px solid #FFD700 !important;  /* Yellow border */
-    border-radius: 10px !important;       /* Rounded corners */
+    border: 2px solid #FFD700 !important;
+    border-radius: 10px !important;
     padding: 10px !important;
 }
-
 div[data-testid="stTextInput"] input:focus {
     outline: none !important;
-    border: 2px solid #FFA500 !important; /* Darker yellow on focus */
+    border: 2px solid #FFA500 !important;
     box-shadow: 0 0 5px #FFD700;
 }
 </style>
